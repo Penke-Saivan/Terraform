@@ -1,14 +1,9 @@
 resource "aws_instance" "terraforma" {
-  count = length(var.instances)  #inbuilt functions
-  ami           = var.ami_id #RHEL-9-DevOps-Practice 
-  instance_type = var.environemnt == "dev" ? "t3.micro" : "t3.medium"
+  ami           = var.ami_id                                          #RHEL-9-DevOps-Practice 
+  instance_type = var.environemnt == "dev" ? "t3.micro" : "t3.medium" #conditionals in terraform
   # instance_type = var.instance_typo
   vpc_security_group_ids = [aws_security_group.allow_all_tf.id]
-
-  tags = {
-    Name      = var.instances[count.index]
-    Terraform = true
-  }
+  tags = var.ec2_tags
 }
 
 resource "aws_security_group" "allow_all_tf" {

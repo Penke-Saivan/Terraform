@@ -1,5 +1,6 @@
 resource "aws_route53_record" "roboshop" {
-  count   = 2
+  # count   = 2
+  count = length(var.instances)  #inbuilt functions
   zone_id = var.zone_id
   name    = "${var.instances[count.index]}.${var.domain_name}"
   type    = "A"
