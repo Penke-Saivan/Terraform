@@ -6,8 +6,12 @@ variable "ami_id" {
 variable "ec2_tags" {
   type = map
   default = {
-    Name      = "Terra-2"
+    Name      = "Terra-3"
     Terraform = true
   }
 
+}
+
+variable "instance_typo"{
+    type = string
 }
