@@ -1,6 +1,7 @@
 resource "aws_instance" "terraforma" {
   ami           = var.ami_id #RHEL-9-DevOps-Practice 
-  instance_type = var.instance_typo
+  instance_type = var.environemnt == "dev" ? "t3.micro": "t3.medium" 
+  # instance_type = var.instance_typo
   vpc_security_group_ids = [aws_security_group.allow_all_tf.id]
 
   tags = var.ec2_tags
