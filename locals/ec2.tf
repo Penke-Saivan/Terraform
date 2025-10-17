@@ -1,11 +1,13 @@
 resource "aws_instance" "terraforma" {
-  ami           = "ami-09c813fb71547fc4f"
+  ami           = local.aws_id
+  # ami           = "ami-09c813fb71547fc4f"
   instance_type = local.instance_type #local
   vpc_security_group_ids = [aws_security_group.allow_all_tf.id]
 
-  tags = merge(var.common_tags, {
-    Name= "${local.common_name}-locals-demo" #local
-  })
+  tags = local.ec2_tags
+  # tags = merge(var.common_tags, {
+  #   Name= "${local.common_name}-locals-demo" #local
+  # })
 }
 
 resource "aws_security_group" "allow_all_tf" {

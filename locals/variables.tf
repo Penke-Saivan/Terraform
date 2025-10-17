@@ -60,6 +60,6 @@ variable "protocol" {
   default = "-1"
 }
 
-variable "environemnt" {
-  default = "dev"
-}
+# variable "environemnt" {
+#   default = "dev"
+# }
