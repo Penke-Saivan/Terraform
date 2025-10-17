@@ -7,27 +7,29 @@ resource "aws_instance" "terraforma" {
 }
 
 resource "aws_security_group" "allow_all_tf" {
-  name   = "allow-all-tf"
-description = "Terr Managed "
+  name   = var.sg_name
+description = "Terr--- Managed "
 
   egress {
-    from_port   = 0 #opening all ports
-    to_port     = 0
+    from_port   = var.egress_from_port #opening all ports
+    to_port     = var.egress_to_port
     protocol    = "-1" #all protocols
-    cidr_blocks = ["0.0.0.0/0"] #internet
+    cidr_blocks = var.cidr #internet
 
   }
 
   ingress {
-    from_port   = 0 #opening all ports
-    to_port     = 0
+    from_port   = var.ingress_from_port #opening all ports
+    to_port     = var.ingress_to_port
     protocol    = "-1" #all protocols
-    cidr_blocks = ["0.0.0.0/0"] #internet
+    cidr_blocks = var.cidr #internet
 
   }
 
   tags= {
     Name = "allow-all-terraform" 
   }
-
+lifecycle {
+  ignore_changes = [ description ]
+}
 }
