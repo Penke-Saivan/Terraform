@@ -8,7 +8,7 @@ resource "aws_instance" "terraforma" {
     Terraform = "true"
   }
   provisioner "local-exec" {
-    command = "echo The server's IP address is ${self}" # to make the resource fail by failing command
+    command = "echo The server's IP address is ${self.public_ip}" # to make the resource fail by failing command
   }
   provisioner "local-exec" {
     command = "echo ${self.private_ip} > inventory"
