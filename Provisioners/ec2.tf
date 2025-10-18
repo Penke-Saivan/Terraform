@@ -21,14 +21,19 @@ resource "aws_instance" "terraforma" {
   provisioner "remote-exec" {
     inline = [
       "sudo dnf install nginx -y ",
-      "systemctl start nginx  "
+      "sudo systemctl start nginx"
     ]
   }
   connection {
-    type = "ssh"
-    user = "ec2-user"
+    type     = "ssh"
+    user     = "ec2-user"
     password = "DevOps321"
-    host = self.public_ip
+    host     = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = ["sudo systemctl stop nginx", "echo 'nginx is stopped successfully'"]
+    when = destroy
   }
 
 }
