@@ -4,19 +4,31 @@ resource "aws_instance" "terraforma" {
   vpc_security_group_ids = [aws_security_group.allow_all_tf.id]
 
   tags = {
-    Name      = "HelloWorld-TFf" #Name of the instance and also present in tags section in AWS
+    Name      = "HelloWorld-Terraformf" #Name of the instance and also present in tags section in AWS
     Terraform = "true"
   }
   provisioner "local-exec" {
     command = "echo The server's IP address is ${self.public_ip}" # to make the resource fail by failing command
   }
   provisioner "local-exec" {
-    command = "echo ${self.private_ip} > inventory"
+    command    = "echo ${self.private_ip} > inventory"
     on_failure = continue
   }
-    provisioner "local-exec" {
+  provisioner "local-exec" {
     command = "echo 'instance is destroyed'"
-    when = destroy
+    when    = destroy
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "sudo dnf install nginx -y ",
+      "systemctl start nginx  "
+    ]
+  }
+  connection {
+    type = "ssh"
+    user = "ec2-user"
+    password = "DevOps321"
+    host = self.public_ip
   }
 
 }
